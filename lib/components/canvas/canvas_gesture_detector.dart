@@ -152,9 +152,6 @@ class _CanvasGestureDetectorState extends State<CanvasGestureDetector> {
     final translation = _transformationController.value.getTranslation();
     final scale = _transformationController.value.getMaxScaleOnAxis();
 
-    print('translation: $translation');
-    print('scale: $scale');
-
     if (scale == 1) return;
 
     _transformationController.value = Matrix4.translationValues(
@@ -176,6 +173,8 @@ class _CanvasGestureDetectorState extends State<CanvasGestureDetector> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Stack(
       children: [
         Listener(
@@ -195,9 +194,9 @@ class _CanvasGestureDetectorState extends State<CanvasGestureDetector> {
 
                   // we need a non-zero boundary margin so we can zoom out
                   // past the size of the page (for minScale < 1)
-                  boundaryMargin: const EdgeInsets.symmetric(
+                  boundaryMargin: EdgeInsets.symmetric(
                     vertical: 0,
-                    horizontal: double.maxFinite,
+                    horizontal: screenSize.width * 2,
                   ),
 
                   transformationController: _transformationController,
