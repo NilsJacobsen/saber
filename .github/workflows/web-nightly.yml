@@ -37,7 +37,8 @@ jobs:
 
       - name: Mark build as dirty
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        run: cp lib/main_dirty.dart lib/main.dart
+        run: |
+          sed -i -e 's!dirty: null,!dirty: true,!g' lib/main.dart
 
       - name: Run tests
         id: tests
